@@ -1,0 +1,61 @@
+**** 
+
+public class Start{
+  public static void main(String[] args) {
+    System.out.println("Hello World");
+
+  }
+}
+
+Static = Class Memories
+[java.lang] (doucumet), [Start {main()}] (class)
+Stack = Method Memories
+[main(args)]
+Hip = Object Memories
+
+
+**** 객체지향설계 5원칙 - SOLID원칙
+
+1. SRP (Single Resposiblity Principle) - 단일책임의 원칙
+  "어떤 Class를 변경하는 이유는 오직 하나뿐이어야한다."
+
+2. OCP (Open Close Principle) -  개방폐쇠의 원칙
+  "Software Entity(Class, Module, Function...)은 확장에 대해서는 열려(Open)있어야 하지만 변경에 대해서는 닫혀(Close)있어야한다."
+
+3. LSP (Liskov Substitution Principle) - 리스코프 치환 원칙
+  "SubType은 언제나 자신의 BaseType으로 교체할 수 있어야한다"
+
+4. ISP (Interface Segregation Principle) - 인터페이스 분리 원칙
+  "Client는 자신이 사용하지않는 Method에 의존관계를 맺으면 안된다."
+
+5. DIP (Dependency Invesion Principle) - 의존 역전 원칙
+  "고차원 Module은 저차원 Module에 의존하면 안된다. 이 두 Module모두 다른 추상화된 것에 의존해야한다."
+  "추상화 된 것은 구체적인 것에 의존하면 안된다. 구체적인 것이 추상화된 것에 의존해야한다."
+
+**** SpringFramework Design Pattern.
+
+1. Adapter Pattern
+  "호출당하는 쪽의 Method를 호출하는 쪽의 코드에 대응하도록 중간에 Adapter를 통해 호출하는 패턴."
+
+2. Proxy Pattern
+  "제어 흐름을 조정하기 위한 목적으로 중간에 Proxy를 두는 패턴"
+
+3. Decorator Pattern
+  "Method호출의 Return값에 변화를 주기위해 중간에 Decorator를 두는 패턴"
+
+4. Singleton Pattern
+  "Class의 Instans를 단 한번만 만들어서 사용하는 패턴"
+
+5. Template Method Pattern
+  "상위Class의 견본 Method에서 하위Class가 Override한 Method를 호출하는 패턴"
+  
+6. Factory Methode Pattern
+  "Override된 Method가 객체를 반환하는 패턴"
+
+7. Strategy Pattern
+  "Client가 전략을 생성해 전략을 Context에 주입하는 패턴"
+
+8. Template Callback Pattern
+  "전략을 익명클래스로 구현한 전략패턴"
+
+9. & MVC Pattern (Model-View-Controller Pattern) & Front Controller Pattern
