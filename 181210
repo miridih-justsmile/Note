@@ -2,4 +2,21 @@
 
 **** POJO(Plain Old Java Object)
 
+POJO (평범한 자바객체) = Java Beans
+여기서 Java Beans는 Sun의 Java Beans나 EJB의 Bean을 뜻하는것이 아닌 순수하게 setter, getter 메소드로 이루어진 Value Object성의 Bean을 말한다.
+
+1. 클래스 상속을 강제하지 않는다. 
+2. 인터페이스 구현을 강제하지 않는다.
+3. 애노테이션 사용을 강제하지 않는다.
+
+
 **** Spring의 3대 프로그래밍 모델 (Ioc/DI, AOP, PSA)
+
+1. IoC(Inversion of Control : 제어의 역전) / DI(Dependency Injection : 의존성 주입)
+  * 의존성이란? 
+    - 의존하는 객체와 의존되는 객체 사이에 집합관계와 구성관계에 따라 다른 생명주기를 가진다.
+    - new를 실행하는 A와 new로 생성된 B사이에 A가 B에 의존한다.
+    ex 1) 집합관계 : 집 vs 냉장고 (부분이 전체와 다른 생명주기를 가진다.)
+    ex 2) 구성관계 : 사람 vs 심장 (전체와 같은 생명주기를 가진다.)
+  * 
+ 
