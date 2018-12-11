@@ -1,0 +1,107 @@
+스프링 입문을 위한 자바객체 지향의 원리와 이해 Study # 2day
+
+**** POJO(Plain Old Java Object)
+
+POJO (평범한 자바객체) = Java Beans
+여기서 Java Beans는 Sun의 Java Beans나 EJB의 Bean을 뜻하는것이 아닌 순수하게 setter, getter 메소드로 이루어진 Value Object성의 Bean을 말한다.
+
+1. 클래스 상속을 강제하지 않는다. 
+2. 인터페이스 구현을 강제하지 않는다.
+3. 애노테이션 사용을 강제하지 않는다.
+
+
+**** Spring의 3대 프로그래밍 모델 (Ioc/DI, AOP, PSA)
+
+** IoC(Inversion of Control : 제어의 역전) / DI(Dependency Injection : 의존성 주입)
+  * 의존성이란? 
+    - 의존하는 객체와 의존되는 객체 사이에 집합관계와 구성관계에 따라 다른 생명주기를 가진다.
+    - new를 실행하는 A와 new로 생성된 B사이에 A가 B에 의존한다.
+    ex 1) 집합관계 : 집 vs 냉장고 (부분이 전체와 다른 생명주기를 가진다.)
+    ex 2) 구성관계 : 사람 vs 심장 (전체와 같은 생명주기를 가진다.)
+  
+  * 주입이란?
+    - 주입이란 말을 외부에서라는 뜻을 내포하고 있는단어.
+    - 결국 A에서 B를 생산하는 것이 아니라, C(외부)에서 B를 생산하여 A에 넣는 작업이 주입이다.
+  
+  1) 생성자를 통한 주입 (non Spring)
+    - Class를 new 할때에 Class와 이름이 같은 Method가 존재하면 바로 실행되는 것을 이용하여, Class 생성시 바로 Parameter를 이용하여 주입받는 방법.
+    ex )
+    
+    public Class Car{
+      Tire tire; // tire를 주입받을 Car의 instans 공간.
+      public Car(Tire tire){ // tire를 주입받음.
+        this.tire = tire;
+      }
+      public String getTireBrand(){
+        return tire.getBrand(); // 주입받은 tire를 실행시킴.
+      }
+    }
+    
+    public Class Driver{
+      public static void main(String[] args){
+        Tire tire = new Tire(); // 외부에서 Tire를 생성.
+        Car car = new Car(tire);  // tire를 Car를 생성함과 동시에 주입함.
+        System.out.println(car.getTireBrand()); // 주입받은 tire를 실행시킬 Method를 실행 및 출력.
+      }
+    }
+    
+  2) 속성을 통한 의존성 주입. (non Spring)
+    - A에 B를 Parameter를 통하여 주입해주는 것이 아니라, setter와 getter같은 Method를 이용하여 주입. 
+    ex) 
+    
+    public Class Car{
+      Tire tire;
+      public Tire getTire(){ // Car내에 tire를 반환하는 Method.
+        return tire;  
+      }
+      public void setTire(Tire tire){ // Car에 tire를 주입하는 Method.
+        this.tire = tire; 
+      }
+      public String getTireBrand(){ // Car내에 tire속 brand를 반환하는 Method.
+        return tire.getBrand(); 
+      }
+    }
+    
+    public Class Driver{
+      public static void main(String[] args){
+        Tire tire = new Tire(); // Tire를 생성하여 tire변수속에 넣는다.
+        Car car = new Car(); // Car를 생성하여 car변수속에 넣는다.
+        car.setTire(tire); // car안의 tire를 주입한다.
+        System.out.println(car.getTireBrand()); // 주입받은 tire속 brand를 가져와 출력한다.
+      }
+    }
+    
+  3) XML파일 아용한 의존성 주입. (in Srping)
+    - XML파일로 주입하여, JAVA Code를 Modify/Recompile/Republish 할 필요없이 XML파일만 수정하여 변경사항을 적용하는 방법.
+    ex)
+    
+    <JAVA파일>
+    
+    import org.springframwork.context.ApplicationContext;
+    import org.springframwork.context.support.ClassPathXmlApplication;
+    
+    public class Driver{
+      public static void main(String[] args){
+        ApplicationContext context = new ClassPathXmlApplicationContext("경로/XML설정파일이름.xml")
+        Car car = context.getBean("car", Car.class); // id가 "car"인 bean을 Class로 받아 car변수안에 넣는다.  
+        // Tire tire = Context.getBean("tire", Tire.class); // id가 "tire"인 bean을 Class로 tire변수안에 넣는다.
+        // car.setTire(tire); // car안의 setTire Method를 호출하여 tire를 주입한다.
+        System.out.println(car.getTireBrand); // 주입받은 tire속 brand를 가져와 출력한다.
+      }
+    }
+    
+    <XML파일> // 경로는 보통 "/src/main/java/package이름/XML파일이름.xml"로 되어있다.
+    
+    <?xml version="1.0" encoding="UTF-8"?>
+    <beans xmls="http://www.springframework.org/schema/beans"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+      // <bean id="tire" class="경로/KoreaTire"></bean>
+      <bean id="koreaTire" class="경로/KoreaTire"></bean>
+      <bean id="americaTire" class="경로/AmericaTire"></bean>
+      // bean id="car" class="경로/Car"></bean> //
+      <bean id="car" class="경로/Car">
+        <property name="tire" ref="koreaTire"></property>
+      </bean>
+    </beans>
+    
